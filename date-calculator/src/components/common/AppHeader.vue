@@ -1,18 +1,5 @@
 <template>
   <header>
-    <h2>header</h2>
+    <h2>날짜 계산기</h2>
   </header>
 </template>
-<script>
-export default {
-  components: {},
-  data() {
-    return {}
-  },
-  setup() {},
-  created() {},
-  mounted() {},
-  unmounted() {},
-  methods: {}
-}
-</script>

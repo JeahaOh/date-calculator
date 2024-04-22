@@ -10,6 +10,7 @@
   "dependencies": {
     "@vuepic/vue-datepicker": "^8.5.0",
     "core-js": "^3.8.3",
+    "dayjs": "^1.11.10",
     "vue": "^3.2.13"
   },
   "devDependencies": {
