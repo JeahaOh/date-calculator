@@ -2,21 +2,11 @@
   <section>
     <fieldset>
       <div>
-        <h2>날짜 차이 계산기</h2>
+        <h2>D-Day 계산기</h2>
       </div>
 
       <div>
-        <label for="from_date">기준일</label>
-        <input
-          type="date"
-          id="from_date"
-          v-model="fromDate"
-          @change="getDateDiff"
-        />
-      </div>
-
-      <div>
-        <label for="to_date">비교일</label>
+        <label for="to_date">목표일</label>
         <input type="date" id="to_date" v-model="toDate" @change="getDateDiff"/>
       </div>
 
@@ -39,9 +29,9 @@
       <br>
 
       <div>
-        {{ fromDateStr }} ~ {{ toDateStr }}
-        <br>
-        일차 : {{ diffDate }}일
+        {{ toDateStr }}까지
+        <br/>
+        D-{{ diffDate }}
       </div>
 
     </fieldset>
@@ -58,7 +48,6 @@ export default {
   data() {
     return {
       fromDate : '',
-      fromDateStr : '',
       toDate : '',
       toDateStr : '',
       diffDate : '',
@@ -72,7 +61,6 @@ export default {
   created() {
     const currentDate = dayjs();
     this.fromDate = currentDate.format('YYYY-MM-DD');
-    this.fromDateStr = currentDate.format('YYYY-MM-DD (ddd)');
     this.toDate = dayjs(currentDate).add(1, 'month').format('YYYY-MM-DD');
     this.toDateStr = dayjs(currentDate).add(1, 'month').format('YYYY-MM-DD (ddd)');
     this.diffDate = this.getDateDiff(this.fromDate, this.toDate);

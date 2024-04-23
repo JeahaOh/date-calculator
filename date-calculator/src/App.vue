@@ -1,27 +1,32 @@
 <template>
   <div>
     <AppHeader/>
-    <!-- <AppNav/> -->
-    <PeriodCalculator/>
-    <DateAddCalculator/>
+    <!--
+      <DDayCalculator/>
+      <PeriodCalculator/>
+      <DateAddCalculator/>
+    -->
+    <AnniversaryCalculator/>
     <!-- <AppFooter/> -->
   </div>
 </template>
 
 <script>
 import AppHeader from './components/common/AppHeader.vue';
-import PeriodCalculator from './components/PeriodCalculator.vue';
-import DateAddCalculator from './components/DateAddCalculator.vue';
+// import PeriodCalculator from './components/PeriodCalculator.vue';
+// import DateAddCalculator from './components/DateAddCalculator.vue';
+// import DDayCalculator from './components/DDayCalculator.vue';
 // import AppFooter from './components/common/AppFooter.vue';
-// import AppNav from './components/common/AppNav.vue';
+import AnniversaryCalculator from './components/AnniversaryCalculator.vue';
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    //  AppNav
-    PeriodCalculator,
-    DateAddCalculator,
+    AnniversaryCalculator
+    // PeriodCalculator,
+    // DateAddCalculator,
+    // DDayCalculator,
     // , AppFooter
   }
 }

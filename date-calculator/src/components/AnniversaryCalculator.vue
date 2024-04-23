@@ -2,7 +2,7 @@
   <section>
     <fieldset>
       <div>
-        <h2>날짜 더하기&middot;빼기 계산기</h2>
+        <h2>기념일 계산기</h2>
       </div>
 
       <div>
@@ -29,34 +29,10 @@
       <br>
       
       <div>
-        <input type="number" id="daysToCalc" v-model="daysToCalc" @change="addDate"/>
-        <label for="daysToCalc">일</label>
+
       </div>
       
       <br>
-
-      <div
-        v-for="(option, idx) in calcTypes" :key="idx"
-      >
-        <input
-          type="radio"
-          v-model="calcType"
-          :name="option.name"
-          :id="`${option.name}_${option.value}`"
-          :value="option.value"
-          :checked="option.value === calcType"
-          @change="addDate"
-        />
-        <label :for="`${option.name}_${option.value}`">
-          &ensp;{{ option.title }}
-        </label>
-      </div>
-
-      <br>
-
-      <div>
-        {{ fromDateStr }}로 부터 {{ daysToCalc }}일 {{ calcType == 'ADD' ? '후는' : '전은' }} {{ resultDateStr }}
-      </div>
 
     </fieldset>
   </section>
@@ -85,6 +61,7 @@ export default {
         {'idx' : 1, 'name' : 'calcType', 'title' : '후', 'value' : 'ADD'},
         {'idx' : 2, 'name' : 'calcType', 'title' : '전', 'value' : 'MINUS'},
       ],
+      anni : {},
     }
   },
   created() {
@@ -106,7 +83,32 @@ export default {
       this.resultDateStr = dayjs(resultDate).format('YYYY-MM-DD (ddd)');
 
       return this.resultDate;
-    }
+    },
+    // createDaysArr() {
+    //   let anni = {};
+    //   let i = 1;
+    //   while (i <= 11) {
+    //       console.log(i * 100);
+    //       this.anni[i * 100] = {name : `${i * 100}일`, days : (i * 100)}
+    //       i++;
+    //   }
+    //   i = 1;
+    //   while (i <= 3) {
+    //       console.log(i * 100);
+    //       anni[i * 365] = {name : `${i}주년`, days : (i * 365)}
+    //       i++;
+    //   }
+
+    //   // anni = Object.keys(anni)
+    //   //     .sort()
+    //   //     .reduce((newObj, key) => {
+    //   //         newObj[key] = anni[key];
+    //   //         return newObj;
+    //   //     }, {}
+    //   // );
+
+    //   this.anni = anni;
+    // }
   },
 }
 </script>
