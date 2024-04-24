@@ -7,7 +7,7 @@
 
       <div>
         <label for="from_date">기준일</label>
-        <input type="date" id="from_date" v-model="fromDate" @change="getDateDiff"/>
+        <input type="date" id="from_date" v-model="fromDate" @change="calculateDates"/>
       </div>
 
       <div>
@@ -15,7 +15,7 @@
         <select
           id="includeFirstDay"
           v-model="includeFirstDaySelected"
-          @change="addDate"
+          @change="calculateDates"
         >
           <option
             v-for="(option, idx) in includeFirstDayOptions" :key="idx"
@@ -29,7 +29,23 @@
       <br>
       
       <div>
-
+        <table>
+          <caption></caption>
+          <thead>
+            <tr>
+              <th>+</th>
+              <th>일수</th>
+              <th>날짜</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(anni, idx) in anniversary" :key="idx">
+              <td>{{ anni.days }}</td>
+              <td>{{ anni.name }}</td>
+              <td>{{ anni.dateStr }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       
       <br>
@@ -48,67 +64,52 @@ export default {
     return {
       fromDate : '',
       fromDateStr : '',
-      resultDate : '',
-      resultDateStr : '',
-      daysToCalc : 100,
       includeFirstDaySelected : true,
       includeFirstDayOptions : [
         {'idx' : 1, 'name' : 'isIncludeFirstDay', 'title' : '포함', 'value' : true},
         {'idx' : 2, 'name' : 'isIncludeFirstDay', 'title' : '불포함', 'value' : false},
       ],
-      calcType : 'ADD',
-      calcTypes : [
-        {'idx' : 1, 'name' : 'calcType', 'title' : '후', 'value' : 'ADD'},
-        {'idx' : 2, 'name' : 'calcType', 'title' : '전', 'value' : 'MINUS'},
-      ],
-      anni : {},
+      anniversary : [],
     }
   },
   created() {
     const currentDate = dayjs();
     this.fromDate = currentDate.format('YYYY-MM-DD');
-    this.fromDateStr = currentDate.format('YYYY-MM-DD (ddd)');
-    this.addDate();
+    this.calculateDates();
   },
   methods: {
-    addDate() {
-      const fromDate = dayjs(this.fromDate);
-      let daysToCalc = this.daysToCalc
-      if (!this.includeFirstDaySelected) daysToCalc++;
-
-      if (this.calcType === 'MINUS') daysToCalc = daysToCalc * -1
-      
-      const resultDate = fromDate.add(daysToCalc, 'day');
-      this.resultDate = dayjs(resultDate).format('YYYY-MM-DD');
-      this.resultDateStr = dayjs(resultDate).format('YYYY-MM-DD (ddd)');
-
-      return this.resultDate;
+    calculateDates() {
+      let seedDate = dayjs(this.fromDate);
+      if (!this.includeFirstDaySelected) seedDate = dayjs(this.fromDate).add(-1, 'day')
+      this.fromDateStr = seedDate.format('YYYY-MM-DD (ddd)');
+      this.calculatedAnniDates();
     },
-    // createDaysArr() {
-    //   let anni = {};
-    //   let i = 1;
-    //   while (i <= 11) {
-    //       console.log(i * 100);
-    //       this.anni[i * 100] = {name : `${i * 100}일`, days : (i * 100)}
-    //       i++;
-    //   }
-    //   i = 1;
-    //   while (i <= 3) {
-    //       console.log(i * 100);
-    //       anni[i * 365] = {name : `${i}주년`, days : (i * 365)}
-    //       i++;
-    //   }
+    calculatedAnniDates() {
+      let anni = [];
+      let i = 1;
+      while (i <= 11) {
+        anni.push({
+          'days' : (i * 100),
+          'name' : `${i * 100}일`,
+          'dateStr' : dayjs(this.fromDate).add((i * 100), 'day').format('YYYY-MM-DD (ddd)'),
+        })
+        i++;
+      }
+      i = 1;
+      while (i <= 3) {
+        anni.push({
+          days : (i * 365),
+          name : `${i}주년`,
+          'dateStr' : dayjs(this.fromDate).add((i * 100), 'day').format('YYYY-MM-DD (ddd)'),
+        })
+        i++;
+      }
 
-    //   // anni = Object.keys(anni)
-    //   //     .sort()
-    //   //     .reduce((newObj, key) => {
-    //   //         newObj[key] = anni[key];
-    //   //         return newObj;
-    //   //     }, {}
-    //   // );
-
-    //   this.anni = anni;
-    // }
+      anni = anni.sort((a, b) => a.days - b.days);
+      console.log(anni);
+      this.anniversary = anni;
+      return anni;
+    }
   },
 }
 </script>
