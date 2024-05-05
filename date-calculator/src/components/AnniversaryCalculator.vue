@@ -34,14 +34,15 @@
           <thead>
             <tr>
               <th>+</th>
-              <th>일수</th>
               <th>날짜</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(anni, idx) in anniversary" :key="idx">
-              <td>{{ anni.days }}</td>
-              <td>{{ anni.name }}</td>
+              <td>
+                {{ anni.name }}
+                {{ anni.isYear ? `(${anni.days})` : ''}}
+              </td>
               <td>{{ anni.dateStr }}</td>
             </tr>
           </tbody>
@@ -80,36 +81,34 @@ export default {
   methods: {
     calculateDates() {
       let seedDate = dayjs(this.fromDate);
-      if (!this.includeFirstDaySelected) seedDate = dayjs(this.fromDate).add(-1, 'day')
-      this.fromDateStr = seedDate.format('YYYY-MM-DD (ddd)');
-      this.calculatedAnniDates();
-    },
-    calculatedAnniDates() {
+      if (!this.includeFirstDaySelected) seedDate = dayjs(seedDate).add(-1, 'day');
+  
       let anni = [];
       let i = 1;
       while (i <= 11) {
         anni.push({
           'days' : (i * 100),
-          'name' : `${i * 100}일`,
-          'dateStr' : dayjs(this.fromDate).add((i * 100), 'day').format('YYYY-MM-DD (ddd)'),
+          'name' : `${i * 100} 일`,
+          'dateStr' : dayjs(seedDate).add((i * 100), 'day').format('YYYY-MM-DD (ddd)'),
+          'isYear' : false,
         })
         i++;
       }
       i = 1;
       while (i <= 3) {
         anni.push({
-          days : (i * 365),
-          name : `${i}주년`,
-          'dateStr' : dayjs(this.fromDate).add((i * 100), 'day').format('YYYY-MM-DD (ddd)'),
+          'days' : (i * 365),
+          'name' : `${i} 주년`,
+          'dateStr' : dayjs(seedDate).add((i * 100), 'day').format('YYYY-MM-DD (ddd)'),
+          'isYear' : true,
         })
         i++;
       }
-
+  
       anni = anni.sort((a, b) => a.days - b.days);
-      console.log(anni);
       this.anniversary = anni;
       return anni;
-    }
+    },
   },
 }
 </script>
