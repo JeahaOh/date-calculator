@@ -25,33 +25,31 @@
           </option>
         </select>
       </div>
-      
-      <br>
-      
-      <div>
-        <table>
-          <caption></caption>
-          <thead>
-            <tr>
-              <th>+</th>
-              <th>날짜</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(anni, idx) in anniversary" :key="idx">
-              <td>
-                {{ anni.name }}
-                {{ anni.isYear ? `(${anni.days})` : ''}}
-              </td>
-              <td>{{ anni.dateStr }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      
-      <br>
-
     </fieldset>
+    
+    <br>
+    
+    <div>
+      <table>
+        <caption></caption>
+        <thead>
+          <tr>
+            <th>+</th>
+            <th>날짜</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(anni, idx) in anniversary" :key="idx">
+            <td>
+              {{ anni.name }}
+              {{ anni.isYear ? `(${anni.days})` : ''}}
+            </td>
+            <td>{{ anni.dateStr }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </section>
 </template>
 

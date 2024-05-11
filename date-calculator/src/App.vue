@@ -22,4 +22,7 @@ export default {
 <style>
   @import './css/reset.css';
   /* @import './css/common.css'; */
+  main > section > fieldset {
+    min-width: 20rem;
+  }
 </style>

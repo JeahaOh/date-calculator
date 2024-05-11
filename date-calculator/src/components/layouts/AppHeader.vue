@@ -4,6 +4,7 @@
     <AppNav/>
   </header>
 </template>
+
 <script>
 import AppNav from '@/components/layouts/AppNav.vue';
 export default {
@@ -12,3 +13,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  header {
+    height: 7rem;
+  }
+</style>

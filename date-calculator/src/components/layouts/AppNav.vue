@@ -23,17 +23,15 @@ export default {
       pages
     }
   },
-  setup() {},
-  created() {
-    console.log(this.pages);
-  },
-  mounted() {},
-  unmounted() {},
   computed: {
     currentRouteName() {
-      return this.$route.name;
+      const currentRouteName = this.$route.name;
+
+      if (currentRouteName !== 'Page Not Found')
+        return currentRouteName;
+      else
+        return '이동';
     }
   },
-  methods: {}
 }
 </script>
