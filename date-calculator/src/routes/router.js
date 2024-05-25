@@ -9,7 +9,7 @@ const routes = [
   {
     path: '/404',
     name: 'Page Not Found',
-    component: () => import('@/components/common/PageNotFound.vue'),
+    component: () => import('@/components/common/error/PageNotFound.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
