@@ -1,5 +1,10 @@
 const routes = [
   {
+    path: '/main',
+    name : '날짜 계산기',
+    component: () => import('@/views/DateCalculator.vue'),
+  },
+  {
     path: '/period',
     name : '기간',
     component: () => import('@/views/PeriodCalculator.vue'),

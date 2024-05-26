@@ -4,7 +4,7 @@ import originRoutes from './routes.js';
 const routes = [
   {
     path: '/',
-    redirect : '/period'
+    redirect : '/main'
   },
   {
     path: '/404',
