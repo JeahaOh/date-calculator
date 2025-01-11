@@ -238,7 +238,7 @@ const weekDays = ['월', '화', '수', '목', '금', '토', '일']
 }
 
 .input-group input {
-  width: 100%;
+  /* width: 100%; */
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;

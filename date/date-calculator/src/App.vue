@@ -2,14 +2,16 @@
   <div class="container">
     <h1>날짜 계산기</h1>
     <div class="calculator-tabs">
-      <button 
-        v-for="tab in tabs" 
-        :key="tab.id"
-        :class="{ active: currentTab === tab.id }"
-        @click="currentTab = tab.id"
-      >
-        {{ tab.name }}
-      </button>
+      <div class="tab-buttons">
+        <button
+          v-for="tab in tabs"
+          :key="tab.id"
+          :class="{ active: currentTab === tab.id }"
+          @click="currentTab = tab.id"
+        >
+          {{ tab.name }}
+        </button>
+      </div>
     </div>
 
     <div class="calculator-content">
@@ -22,6 +24,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'  // shallowRef 대신 computed 사용
+
 import PeriodCalculator from './components/PeriodCalculator.vue'
 import DateCalculator from './components/DateCalculator.vue'
 import DdayCalculator from './components/DdayCalculator.vue'
@@ -84,7 +87,7 @@ input[type="date"],
 input[type="text"],
 input[type="number"],
 select {
-  width: 100%;
+  /* width: 100%; */
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
