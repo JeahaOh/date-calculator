@@ -1,57 +1,46 @@
 <template>
-  <div class="week-calculator">
-    <div class="input-section">
-      <div class="input-group">
-        <label for="selectedDate">날짜 선택</label>
-        <input type="date" id="selectedDate" name="selectedDate" v-model="selectedDate">
-      </div>
-    </div>
-
-    <div class="results" v-if="selectedDate">
-      <div class="result-item">
-        <div class="week-info">
-          <p class="week-number">
+  <section class="container">
+    <div>
+      <div class="card mb-3">
+        <div class="card-body">
+          <input type="date" id="selectedDate" name="selectedDate" v-model="selectedDate" class="form-control">
+        </div>
+        <div class="card-body">
+          <p class="card-text text-end">
             {{ monthWeek }}
-            <span class="sub-text">(이번 달 기준)</span>
           </p>
-          <p class="week-number">
+          <p class="card-text text-end">
             {{ yearWeek }}
-            <span class="sub-text">(올해 기준)</span>
           </p>
         </div>
       </div>
 
-      <div class="month-calendar">
-        <h3>{{ currentMonth }} 주차 정보</h3>
-        <div class="calendar-grid">
-          <div class="calendar-header">
-            <span v-for="day in weekDays" 
-              :key="day"
-              :class="{ 'sunday': day === '일', 'saturday': day === '토' }"
-            >{{ day }}
-            </span>
-          </div>
-          <div class="calendar-body">
-            <div v-for="week in monthCalendar" 
-                 :key="week.weekNum" 
-                 class="calendar-week"
-                 :class="{ 'current-week': week.isCurrentWeek }">
-              <div v-for="day in week.days" 
-                   :key="day.date"
-                   class="calendar-day"
-                   :class="{
-                     'other-month': !day.isCurrentMonth,
-                     'selected': day.isSelected,
-                     'today': day.isToday
-                   }">
-                {{ day.dayNum }}
-              </div>
-            </div>
-          </div>
+      <div v-if="selectedDate">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th v-for="day in weekDays" :key="day" :class="{ 'text-danger': day === '일', 'text-primary': day === '토' }">
+                  {{ day }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="week in monthCalendar" :key="week.weekNum" :class="{ 'table-active': week.isCurrentWeek }">
+                <td v-for="day in week.days" :key="day.date" :class="{
+                  'bg-light': !day.isCurrentMonth,
+                  'table-primary': day.isSelected,
+                  'table-warning': day.isToday
+                }">
+                  {{ day.dayNum }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -219,127 +208,7 @@ const monthCalendar = computed(() => {
 const weekDays = ['월', '화', '수', '목', '금', '토', '일']
 </script>
 
-<style scoped>
-.week-calculator {
-  padding: 1rem;
-}
-
-.input-section {
-  margin-bottom: 2rem;
-}
-
-.input-group {
-  margin-bottom: 1rem;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.input-group input {
-  /* width: 100%; */
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.result-item {
-  margin-bottom: 2rem;
-  padding: 1rem;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
-.week-info {
-  margin-top: 1rem;
-}
-
-.week-number {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 0.5rem 0;
-}
-
-.sub-text {
-  font-size: 0.9rem;
-  color: #666;
-  font-weight: normal;
-  margin-left: 0.5rem;
-}
-
-.month-calendar {
-  margin-top: 2rem;
-}
-
-.calendar-grid {
-  margin-top: 1rem;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.calendar-header {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  background-color: #f8f9fa;
-  padding: 0.5rem;
-  text-align: center;
-  font-weight: bold;
-}
-
-.calendar-header span:first-child {
-  color: #dc3545;  /* 일요일 색상 */
-}
-
-.calendar-header span:last-child {
-  color: #0d6efd;  /* 토요일 색상 */
-}
-
-.calendar-header .sunday {
-  color: #dc3545;
-}
-
-.calendar-header .saturday {
-  color: #0d6efd;
-}
-
-.calendar-body {
-  background-color: #fff;
-}
-
-.calendar-week {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  border-top: 1px solid #eee;
-}
-
-.calendar-week.current-week {
-  background-color: #e8f4ff;
-}
-
-.calendar-day {
-  padding: 0.8rem;
-  text-align: center;
-  position: relative;
-}
-
-.calendar-day.other-month {
-  color: #ccc;
-}
-
-.calendar-day.selected {
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-}
-
-.calendar-day.today {
-  border: 2px solid #28a745;
-  font-weight: bold;
-}
-</style>
+<style scoped></style>
 <!--
 # N월 N주차 구하기
 

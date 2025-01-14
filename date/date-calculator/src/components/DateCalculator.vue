@@ -1,43 +1,51 @@
 <template>
-  <div class="date-calculator">
-    <div class="calculator-section">
-      <div class="input-group">
-        <label for="baseDate">기준일</label>
-        <input type="date" id="baseDate" name="baseDate" v-model="baseDate" class="date-input">
-      </div>
-      <div class="calculation-inputs">
-        <input 
-          type="number" 
-          v-model="amount" 
-          min="1" 
-          class="number-input"
-        >
-        <select v-model="unit" class="select-input">
-          <option value="days">일</option>
-          <option value="weeks">주</option>
-          <option value="months">개월</option>
-          <option value="years">년</option>
-        </select>
-        <select v-model="direction" class="select-input">
-          <option value="after">후</option>
-          <option value="before">전</option>
-        </select>
+  <section class="container">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="form-group">
+            <input type="date" id="baseDate" name="baseDate" v-model="baseDate" class="form-control">
+          </div>
+        </div>
+        <div class="row g-2 align-items-center">
+          <div class="col-4">
+            <input 
+            type="number" 
+            v-model="amount" 
+            min="1"
+            class="form-control"
+            >
+          </div>
+          <div class="col-4">
+            <select v-model="unit" class="form-select">
+              <option value="days">일</option>
+              <option value="weeks">주</option>
+              <option value="months">개월</option>
+              <option value="years">년</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <select v-model="direction" class="form-select">
+              <option value="after">후</option>
+              <option value="before">전</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="results" v-if="baseDate">
-      <div class="result-card">
-        <h3>계산 결과</h3>
-        <div class="result-content">
-          <p class="calculated-date">{{ calculatedDate }}</p>
-          <p class="days-info">
+      
+      <div v-if="baseDate">
+        <div class="card">
+        <div class="card-body text-center">
+          <h4 class="card-title mb-3">{{ calculatedDate }}</h4>
+          <p class="card-text text-muted">
             오늘로부터 {{ daysFromToday }}일 
             {{ direction === 'after' ? '후' : '전' }}
           </p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -84,134 +92,3 @@ const daysFromToday = computed(() => {
   return Math.abs(dayjs().startOf('day').diff(calculatedDateObj.value, 'day'))
 })
 </script>
-
-<style scoped>
-.date-calculator {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-.calculator-section {
-  margin-bottom: 2rem;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.input-group label {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #333;
-}
-
-.date-input {
-  padding: 0.8rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s;
-  width: 100%;
-}
-
-.date-input:focus {
-  outline: none;
-  border-color: #2196F3;
-}
-
-.calculation-inputs {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.number-input {
-  padding: 0.8rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  width: 100px;
-  transition: border-color 0.2s;
-}
-
-.number-input:focus {
-  outline: none;
-  border-color: #2196F3;
-}
-
-.select-input {
-  padding: 0.8rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: white;
-  cursor: pointer;
-  transition: border-color 0.2s;
-  min-width: 100px;
-}
-
-.select-input:focus {
-  outline: none;
-  border-color: #2196F3;
-}
-
-.results {
-  margin-top: 2rem;
-}
-
-.result-card {
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid #eee;
-}
-
-.result-card h3 {
-  margin: 0 0 1rem 0;
-  color: #333;
-  font-size: 1.3rem;
-}
-
-.result-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.calculated-date {
-  font-size: 1.4rem;
-  color: #1976D2;
-  font-weight: 500;
-  margin: 0;
-}
-
-.days-info {
-  color: #666;
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-@media (max-width: 480px) {
-  .date-calculator {
-    padding: 1rem;
-  }
-
-  .calculation-inputs {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .number-input,
-  .select-input {
-    width: 100%;
-  }
-}
-</style>

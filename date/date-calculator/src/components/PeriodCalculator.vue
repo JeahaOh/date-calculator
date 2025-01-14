@@ -1,39 +1,54 @@
 <template>
-  <div class="period-calculator">
-    <div class="input-section">
-      <div class="date-inputs">
-        <div class="input-group">
-          <label for="fromDate">시작일</label>
-          <input type="date" id="fromDate" name="fromDate" v-model="fromDate">
+  <section class="container">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="form-group">
+            <input type="date" class="form-control" id="fromDate" name="fromDate" v-model="fromDate">
+          </div>
         </div>
-        <div class="input-group">
-          <label for="toDate">종료일</label>
-          <input type="date" id="toDate" name="toDate" v-model="toDate">
+        <div class="row mb-3">
+          <div class="form-group d-flex justify-content-center align-items-center">
+            <span class="text-center">~</span>
+          </div>
         </div>
-      </div>
-      <div class="options">
-        <label>
-          <input type="checkbox" v-model="includeFirstDay">
-          초일 포함하여 계산
-        </label>
+        <div class="row mb-3">
+          <div class="form-group">
+            <input type="date" class="form-control" id="toDate" name="toDate" v-model="toDate">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <input type="checkbox" class="form-check-input me-2" id="includeFirstDay" v-model="includeFirstDay">
+            <label class="form-check-label" for="includeFirstDay">
+              초일 포함
+            </label>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="results" v-if="isValidDates">
-      <div class="result-item">
-        <p>{{ daysDifference }}일</p>
-      </div>
-      <div class="result-item">
-        <p>{{ weeksDifference }}주 {{ remainingDays }}일</p>
-      </div>
-      <div class="result-item">
-        <p>{{ monthsDifference }}개월 {{ remainingDaysInMonth }}일</p>
-      </div>
-      <div class="result-item">
-        <p>{{ yearsDifference }}년 {{ remainingMonths }}개월 {{ remainingDaysInYear }}일</p>
+    <div v-if="isValidDates">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <p class="card-text">{{ daysDifference }}일</p>
+            </div>
+            <div class="col-md-6 mb-4" v-if="weeksDifference > 0">
+              <p class="card-text">{{ weeksDifference }}주 {{ remainingDays }}일</p>
+            </div>
+            <div class="col-md-6 mb-4" v-if="monthsDifference > 0">
+              <p class="card-text">{{ monthsDifference }}개월 {{ remainingDaysInMonth }}일</p>
+            </div>
+            <div class="col-md-6 mb-4" v-if="yearsDifference > 0">
+              <p class="card-text">{{ yearsDifference }}년 {{ remainingMonths }}개월 {{ remainingDaysInYear }}일</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -104,11 +119,12 @@ const yearsDifference = computed(() => {
   const yearEnd = dayjs(fromDate.value).add(years, 'year')
 
   // 마지막 년의 일수 차이 계산
-  const remainingDays = calculateTotalDays(yearEnd, toDate.value, includeFirstDay.value)
+  const remainingDays = calculateTotalDays(yearEnd, toDate.value, includeFirstDay.value);
 
   // 남은 일수가 음수면 한 해를 빼고, 양수면 현재 해 유지
-  return remainingDays < 0 ? years - 1 : years
-})
+  return remainingDays < 0 ? years - 1 : years;
+});
+
 const remainingMonths = computed(() => {
   if (!isValidDates.value) return 0
   const totalMonths = monthsDifference.value
@@ -116,126 +132,3 @@ const remainingMonths = computed(() => {
 })
 const remainingDaysInYear = computed(() => remainingDaysInMonth.value)
 </script>
-
-<style scoped>
-.period-calculator {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-}
-
-.input-section {
-  margin-bottom: 2rem;
-}
-
-.date-inputs {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.input-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.input-group label {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #333;
-}
-
-.input-group input[type="date"] {
-  height: 45px;
-  padding: 0 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  color: #333;
-  background-color: white;
-  transition: all 0.2s ease;
-  width: 100%;
-  font-family: inherit;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.input-group input[type="date"]:focus {
-  outline: none;
-  border-color: #2196F3;
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
-}
-
-.input-group input[type="date"]:hover {
-  border-color: #90CAF9;
-}
-
-.options {
-  margin-top: 1rem;
-}
-
-.options label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  color: #666;
-  cursor: pointer;
-}
-
-.options input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  border: 2px solid #e0e0e0;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.results {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.result-item {
-  background-color: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid #eee;
-}
-
-.result-item h3 {
-  margin: 0 0 1rem 0;
-  color: #333;
-  font-size: 1.1rem;
-}
-
-.result-item p {
-  margin: 0;
-  color: #1976D2;
-  font-size: 1.3rem;
-  font-weight: 500;
-}
-
-@media (max-width: 480px) {
-  .period-calculator {
-    padding: 1rem;
-  }
-
-  .date-inputs {
-    flex-direction: column;
-  }
-
-  .results {
-    grid-template-columns: 1fr;
-  }
-}
-</style>

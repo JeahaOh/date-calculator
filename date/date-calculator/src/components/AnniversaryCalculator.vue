@@ -1,31 +1,35 @@
 <template>
-  <div class="anniversary-calculator">
-    <div class="input-section">
-      <div class="input-group">
-        <label for="baseDate">기준일</label>
-        <input type="date" id="baseDate" name="baseDate" v-model="baseDate">
+  <section class="container">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="mb-3">
+          <input type="date" class="form-control" id="baseDate" name="baseDate" v-model="baseDate">
+        </div>
       </div>
     </div>
 
-    <div class="results" v-if="baseDate">
-      <h3>기념일 목록</h3>
-      <div class="anniversary-list">
+    <div v-if="baseDate" class="overflow-auto" style="max-height: 400px">
+      <div class="list-group">
         <div v-for="(date, index) in anniversaryDates" 
-             :key="index" 
-             class="anniversary-item"
-             :class="{ 'passed': isPassed(date.date) }">
-          <div class="anniversary-info">
-            <span class="day-count">{{ date.label }}</span>
-            <span class="date">{{ formatDate(date.date) }}</span>
-            <span class="day-of-week">({{ getDayOfWeek(date.date) }})</span>
+          :key="index" 
+          class="list-group-item list-group-item-action"
+          :class="{ 'list-group-item-secondary': isPassed(date.date) }"
+        >
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0 me-6">{{ date.label }}</h5>
           </div>
-          <div class="remaining-info" :class="getTimeClass(date.date)">
-            {{ getTimeText(date.date) }}
+          <div class="d-flex justify-content-end">
+            <span class="">{{ formatDate(date.date) }} ({{ getDayOfWeek(date.date) }})</span>
+          </div>
+          <div class="d-flex justify-content-end">
+            <span class="text-muted" :class="getTimeClass(date.date)">
+              {{ getTimeText(date.date) }}
+            </span>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -124,112 +128,3 @@ const getTimeClass = (date) => {
   return date.isAfter(today) ? 'future' : 'past'
 }
 </script>
-
-<style scoped>
-.anniversary-calculator {
-  padding: 1rem;
-}
-
-.input-section {
-  margin-bottom: 2rem;
-}
-
-.input-group {
-  margin-bottom: 1rem;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.input-group input {
-  /* width: 100%; */
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.anniversary-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* 긴 목록을 위한 스타일 추가 */
-.anniversary-list {
-  max-height: 70vh;  /* 화면 높이의 70% */
-  overflow-y: auto;  /* 스크롤 가능하도록 */
-  padding-right: 1rem;  /* 스크롤바 공간 확보 */
-}
-
-/* 스크롤바 스타일링 (선택사항) */
-.anniversary-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.anniversary-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-.anniversary-list::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-.anniversary-list::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.anniversary-item {
-  padding: 1rem;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.anniversary-info {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.day-count {
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.date {
-  color: #666;
-}
-
-.day-of-week {
-  color: #888;
-  font-size: 0.9rem;
-}
-
-.remaining-info {
-  font-size: 0.9rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #eee;
-}
-
-.remaining-info.future {
-  color: #2196F3;
-}
-
-.remaining-info.today {
-  color: #4CAF50;
-}
-
-.remaining-info.past {
-  color: #F44336;
-}
-
-.anniversary-item.passed {
-  opacity: 0.7;
-}
-</style>

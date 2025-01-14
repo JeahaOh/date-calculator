@@ -1,54 +1,62 @@
 <template>
-  <div class="converter">
+  <section class="container py-4">
     <!-- 첫 번째 섹션: 월/일 변환 -->
-    <div class="section">
-      <h3><label for="solarDate">양력 변환</label></h3>
-      <div class="date-input">
-        <input 
-          type="date" 
-          id="solarDate"
-          name="solarDate"
-          v-model="solarDate"
-          :min="'1900-01-01'"
-          :max="'2100-12-31'"
-        >
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3 class="h5 mb-0"><label for="solarDate">양력 변환</label></h3>
       </div>
-      <div class="result" v-if="solarToLunarResult">
-        <p>
-          음력으로 
+      <div class="card-body">
+        <div class="mb-3">
+          <input 
+            type="date" 
+            id="solarDate"
+            name="solarDate"
+            v-model="solarDate"
+            :min="'1900-01-01'"
+            :max="'2100-12-31'"
+            class="form-control"
+          >
+        </div>
+        <div v-if="solarToLunarResult" class="alert alert-info mb-0">
+          음력
           {{ solarToLunarResult.month }}월 
           {{ solarToLunarResult.day }}일
-          입니다.
-        </p>
+        </div>
       </div>
     </div>
 
     <!-- 두 번째 섹션: 양력/음력 전체 변환 -->
-    <div class="section">
-      <h3><label for="convertDate">양력/음력 변환</label></h3>
-      <div class="date-input">
-        <select v-model="dateType" class="date-type">
-          <option value="solar">양력</option>
-          <option value="lunar">음력</option>
-        </select>
-        <input 
-          type="date" 
-          id="convertDate"
-          name="convertDate"
-          v-model="convertDate"
-          :min="'1900-01-01'"
-          :max="'2100-12-31'"
-        >
+    <div class="card">
+      <div class="card-header">
+        <h3 class="h5 mb-0"><label for="convertDate">양력/음력 변환</label></h3>
       </div>
-      <div class="result" v-if="convertResult">
-        <p>
-          {{ dateType === 'solar' ? '음력' : '양력' }}으로 
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-6">
+            <select v-model="dateType" class="form-select">
+              <option value="solar">양력</option>
+              <option value="lunar">음력</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <input 
+              type="date" 
+              id="convertDate"
+              name="convertDate"
+              v-model="convertDate"
+              :min="'1900-01-01'"
+              :max="'2100-12-31'"
+              class="form-control"
+            >
+          </div>
+        </div>
+        <div v-if="convertResult" class="alert alert-info mb-0">
+          {{ dateType === 'solar' ? '음력' : '양력' }}
           {{ formatResult(convertResult) }}
-          입니다.
-        </p>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -133,47 +141,3 @@ const formatResult = (result) => {
   return text
 }
 </script>
-
-<style scoped>
-.converter {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.section {
-  margin-bottom: 30px;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-}
-
-.date-input {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin: 15px 0;
-}
-
-.date-input input[type="date"] {
-  padding: 8px;
-  font-size: 16px;
-  flex: 1;
-}
-
-.date-type {
-  padding: 8px;
-  font-size: 16px;
-  min-width: 80px;
-}
-
-.result {
-  margin-top: 15px;
-  color: #666;
-}
-
-h3 {
-  margin: 0;
-  color: #333;
-}
-</style>
