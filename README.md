@@ -2,28 +2,43 @@
 
 vue를 이용하여 날짜 계산기를 만들어 본다.
 
+## spec
 
-## 참고
+- vue 3.5.13
+- nodejs 22.13.0
 
-- 날짜 계산기
-  - https://kr.calc-date.com/
-  - https://support.lawtop.co.kr/period_renew/index_all.asp
-  - https://superkts.com/cal/days/
-- date picker : https://vue3datepicker.com/
-- pico css : https://picocss.com/
+## setting
 
-## 기능
+```bash
+  nvm install 22.13.0
+  nvm use 22.13.0
+  npm init
+  npm install -g @vue/cli
+  vue create date-calculator
+  cd date-calculator
+  npm run serve
+```
 
-- [V] 기간 계산 : from ~ to 까지 며칠이 남았는지 계산
-  - 옵션
-    - [V] 초일을 1일로 계산할지 0일로 계산할지
-    - [ ] 몇주 며칠, 몇개월 며칠, 몇년 며칠
-- [V] 기준일로부터 며칠(전/후)는 언제인지 계산
-  - 며칠이 지났는지, 며칠이 남았는지
-- [V] D day : 특정일까지 며칠 남았는지 계산
-- [V] 기념일 : YYYYMMDD로 부터 100, 200, 300, 365, 400, 500을 알려주는 기능
-- [V] 기능별 GNB 라우팅 등
-- [ ] refact
-- [ ] 기능 통합 페이지
-- [ ] YYYYMMDD로 부터 X 주 후는 몇일인지
-- [ ] YYYYMMDD는 MM의 몇 주차인지
+## Project setup
+
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+
+```
+npm run build
+```
+
+### Lints and fixes files
+
+```
+npm run lint
+```
